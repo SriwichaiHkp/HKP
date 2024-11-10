@@ -65,7 +65,7 @@ function displayResults(data, term) {
             </div>
             <div class="result-item">
                 <span>แต้มตลอดทั้งปีการศึกษา</span>
-                <span>${found["สรุปทั้งปี"] || ''}</span>
+                <span>${found["แต้มทั้งหมด"] || ''}</span>
             </div>
         `;
         infoTable.innerHTML = infoHtml;
