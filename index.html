@@ -1,174 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HKPAffairs</title>
-    <style>
-        /* สไตล์ทั่วไปของ body */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-
-        /* สไตล์สำหรับ Navbar */
-        nav {
-            background-color: #333;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between; /* ทำให้โลโก้อยู่ซ้ายและเมนูอยู่ขวา */
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 24px;
-            color: white;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-
-        nav ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-        }
-
-        nav ul li {
-            margin-left: 20px; /* เว้นระยะระหว่างเมนู */
-        }
-
-        nav ul li a {
-            display: block;
-            color: white;
-            text-align: center;
-            padding: 14px 20px;
-            text-decoration: none;
-        }
-
-        nav ul li a:hover {
-            background-color: #ddd;
-            color: black;
-        }
-
-        /* ฟอร์มค้นหาสำหรับการค้นหา */
-        #searchForm {
-            margin: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #searchQuery {
-            padding: 10px;
-            font-size: 16px;
-            width: 300px;
-            border: 2px solid #ccc;
-            border-radius: 4px;
-        }
-
-        #searchForm button {
-            padding: 10px 15px;
-            background-color: #333;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-left: 10px;
-        }
-
-        #searchForm button:hover {
-            background-color: #555;
-        }
-
-        /* สไตล์สำหรับผลลัพธ์การค้นหา */
-        #searchResults {
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        #searchResults p {
-            font-size: 18px;
-            color: #333;
-        }
-
-        /* สไตล์เมื่อไม่พบผลลัพธ์ */
-        #searchResults p.no-results {
-            color: red;
-            font-weight: bold;
-        }
-
-        /* สไตล์เมื่อขนาดหน้าจอเล็กลง (มือถือ) */
-        @media screen and (max-width: 600px) {
-            nav ul li {
-                float: none;
-                width: 100%;
-            }
-        }
-    </style>
+    <title>HKP Affairs</title>
+    <!-- ลิงก์ไปยังไฟล์ CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="imgs/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-
-    <!-- Navbar -->
-    <nav>
-        <div class="logo">
-            <a href="imgs/1.png">HKPAffairs</a>
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <a class="navbar-brand" href="index.html">HKP Affairs</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="index.html">หน้าหลัก <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="privacy_policy.html">นโยบายคุ้มครองข้อมูลส่วนบุคคล</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://sites.google.com/hunkhapit.ac.th/hkp-student-affairs/">กลุ่มบริหารกิจการนักเรียน</a>
+                </li>
+            </ul>
         </div>
-        <ul>
-            <li><a href="#">หน้าแรก</a></li>
-            <li><a href="https://sites.google.com/hunkhapit.ac.th/hkp-student-affairs/"></a>กลุ่มบริหารกิจการนักเรียน</li>
-            <li><a href="privacy_policy.html">นโยบายคุ้มครองข้อมูลส่วนบุคคล</a></li>
-        </ul>
     </nav>
+    
+    <header class="hero-section text-center">
+        <div class="container">
+            <h1>ระบบกิจการนักเรียน</h1>
+            <h2>(สำหรับนักเรียน/ผู้ปกครอง)</h2>
+            <p>Hunkhapittayakom School</p>
+        </div>
+    </header>
 
-    <!-- ฟอร์มค้นหา -->
-    <form id="searchForm">
-        <input type="text" id="searchQuery" placeholder="เลขประจำตัวนักเรียน" required>
-        <button type="submit">ค้นหา</button>
-    </form>
+    <div class="content-container">
+        <div class="search-container">
+            <input type="text" id="searchTerm" placeholder="กรอกเลขประจำตัวนักเรียน" class="form-control mb-3">
+            <button onclick="search()" class="btn btn-primary btn-block">ค้นหา</button>
+        </div>
 
-    <!-- ผลลัพธ์การค้นหา -->
-    <div id="searchResults"></div>
+        <div class="result-container" id="infoTable">
+            <!-- ข้อมูลจะแสดงในรูปแบบแนวตั้งที่นี่ -->
+        </div>
+    </div>
 
-    <script>
-        document.getElementById('searchForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // ป้องกันการรีเฟรชหน้าเว็บ
+    <footer class="footer bg-dark text-white py-3">
+        <div class="container text-center">
+            <p>&copy; 2024 KSRISAMRIT. All rights reserved</p>
+            <p>&copy; 2024 KSRISAMRIT. All rights reserved</p>
+        </div>
+    </footer>
 
-            // ดึงค่าคำค้นหาจากฟอร์ม
-            const query = document.getElementById('searchQuery').value.toLowerCase();
-            
-            // ข้อมูลตัวอย่างที่จะค้นหา
-            const data = [
-                "กิจกรรมสัมมนา",
-                "ข่าวสารการประชุม",
-                "การประกาศต่างๆ",
-                "ข้อกำหนดและเงื่อนไข",
-                "คำแนะนำสำหรับสมาชิก"
-            ];
+    <!-- Modal for loading status -->
+    <div id="loadingModal" class="modal">
+        <div class="modal-content">
+            <p>กำลังโหลด...</p>
+        </div>
+    </div>
 
-            // ฟิลเตอร์ข้อมูลตามคำค้นหา
-            const results = data.filter(item => item.toLowerCase().includes(query));
+    <!-- Privacy Policy Popup -->
+    <div id="privacyPopup" class="privacy-popup">
+        <h4>นโยบายคุ้มครองข้อมูลส่วนบุคคล</h4>
+        <p>ข้อมูลของท่านจะถูกใช้เพื่อการให้บริการในระบบกิจการนักเรียนเท่านั้น โดยข้อมูลของท่านจะถูกเก็บรักษาอย่างปลอดภัย และจะไม่ถูกเปิดเผยแก่บุคคลภายนอกตามนโยบายความเป็นส่วนตัวของโรงเรียน</p>
+        <p>โดยจะมีข้อมูลที่ใช้ดังต่อไปนี้</p>
+        <li>เลขประจำตัวนักเรียน</li>
+        <li>ชื่อ-นามสกุล</li>
+        <li>ชั้น</li>
+        <li>เลขที่</li>
+        <button class="close-btn" onclick="closePrivacyPopup()">ปิด</button>
+    </div>
 
-            // แสดงผลลัพธ์การค้นหา
-            const resultsContainer = document.getElementById('searchResults');
-            resultsContainer.innerHTML = ''; // ล้างผลลัพธ์เดิม
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-            if (results.length > 0) {
-                results.forEach(result => {
-                    const resultElement = document.createElement('p');
-                    resultElement.textContent = result;
-                    resultsContainer.appendChild(resultElement);
-                });
-            } else {
-                const noResultsElement = document.createElement('p');
-                noResultsElement.textContent = 'ไม่พบผลลัพธ์ที่ตรงกัน';
-                noResultsElement.classList.add('no-results');
-                resultsContainer.appendChild(noResultsElement);
-            }
-        });
-    </script>
-
+    <!-- ลิงก์ไปยังไฟล์ JavaScript -->
+    <script src="scripts.js"></script>
 </body>
 </html>

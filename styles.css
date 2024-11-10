@@ -1,0 +1,267 @@
+/* การตั้งค่าเริ่มต้นสำหรับทุกหน้าจอ */
+* {
+    font-family: "Chakra Petch", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* ช่วยให้ขนาดองค์ประกอบถูกคำนวณจากขนาดจริง */
+}
+
+/* Navbar */
+.navbar-custom {
+    background-color: #0056b3;
+    padding: 1rem;
+}
+
+.navbar-custom .navbar-brand, .navbar-custom .nav-link {
+    color: #fff;
+}
+
+.navbar-custom .nav-link:hover {
+    color: #f8f9fa;
+    transform: translateY(-2px);
+}
+
+.navbar-toggler {
+    border-color: #FA4616;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%23FA4616' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+/* Hero Section */
+.hero-section {
+    background: #275c92;
+    color: #fff;
+    padding: 60px 20px; /* เพิ่ม padding ให้มากขึ้นสำหรับคอมพิวเตอร์ */
+    margin-bottom: 0; /* เอาช่องว่างออกจากด้านล่าง */
+    position: relative; /* ใช้ relative positioning เพื่อให้ search-container ใช้ absolute positioning ได้ */
+    text-align: center;
+}
+
+.hero-section h1 {
+    font-size: 2.5rem; /* ขนาดฟอนต์ที่เหมาะสมบนคอมพิวเตอร์ */
+}
+
+.hero-section h2 {
+    font-size: 1.8rem; /* ขนาดฟอนต์ที่เหมาะสมบนคอมพิวเตอร์ */
+}
+
+.hero-section p {
+    font-size: 1.2rem; /* ขนาดฟอนต์ที่เหมาะสมบนคอมพิวเตอร์ */
+}
+
+/* Footer */
+.footer {
+    background-color: #333;
+    padding: 2rem 0;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.footer p {
+    margin: 0;
+    color: #cccccc;
+}
+
+.footer a {
+    color: #cccccc;
+    margin: 0 0.5rem;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+/* ทำให้ HTML และ Body เต็มพื้นที่ */
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Content Container จะยืดเต็มพื้นที่ */
+.content-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+/* ฟอร์มค้นหาบนมือถือ - ย้ายไปอยู่ติดกับ hero-section */
+.search-container {
+    position: absolute; 
+    left: 50%;
+    transform: translateX(-50%); /* จัดกลาง */
+    top: 220px; /* ปรับตำแหน่งให้ติดกับ hero-section */
+    text-align: center;
+    width: 90%; /* กำหนดความกว้าง */
+    max-width: 500px; /* ความกว้างสูงสุด */
+    z-index: 10; /* ทำให้ฟอร์มค้นหาปรากฏด้านบน */
+}
+
+.search-container input, .search-container button {
+    font-size: 1rem; /* ขนาดฟอนต์ที่เหมาะสม */
+    padding: 0.75rem;
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* สไตล์สำหรับการแสดงข้อมูลในแนวตั้ง */
+.result-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 500px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.result-item {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 5px;
+    border-bottom: 1px solid #ddd;
+}
+
+.result-item span {
+    font-weight: bold;
+}
+
+/* Modal สำหรับแสดงสถานะการโหลด */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+}
+
+/* Privacy Policy Popup */
+.privacy-popup {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fff;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    width: 80%;
+    max-width: 500px;
+}
+
+.privacy-popup h4 {
+    margin-top: 0;
+}
+
+.privacy-popup .close-btn {
+    cursor: pointer;
+    background-color: #275c92;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    float: right;
+}
+
+/* Media Queries สำหรับหน้าจอที่เล็กลง เช่น โทรศัพท์ */
+@media (max-width: 768px) {
+
+    .navbar-custom {
+        padding: 0.5rem;
+    }
+
+    .hero-section {
+        padding: 40px 20px; /* ลด padding */
+    }
+
+    .hero-section h1 {
+        font-size: 1.8rem; /* ลดขนาดฟอนต์ของ h1 */
+    }
+
+    .hero-section h2 {
+        font-size: 1.5rem; /* ลดขนาดฟอนต์ของ h2 */
+    }
+
+    .hero-section p {
+        font-size: 1rem; /* ลดขนาดฟอนต์ของข้อความใน hero-section */
+    }
+
+    .search-container {
+        width: 90%;
+        max-width: 100%;
+        top: 220px; /* ปรับตำแหน่งขึ้นไปใกล้กับ hero-section */
+    }
+
+    .result-container {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .footer {
+        padding: 1rem;
+    }
+
+    .search-container input, .search-container button {
+        font-size: 0.9rem; /* ปรับขนาดฟอนต์ของช่องกรอกข้อมูลและปุ่มค้นหา */
+    }
+
+    .result-item span {
+        font-size: 0.9rem; /* ลดขนาดฟอนต์ของข้อมูลในผลลัพธ์ */
+    }
+}
+
+@media (max-width: 576px) {
+
+    .navbar-custom {
+        padding: 0.5rem;
+    }
+
+    .modal-content {
+        width: 90%;
+    }
+
+    .privacy-popup {
+        width: 90%;
+    }
+
+    .hero-section h1 {
+        font-size: 1.5rem; /* ลดขนาดฟอนต์ลงอีก */
+    }
+
+    .hero-section p {
+        font-size: 0.9rem; /* ลดขนาดฟอนต์ของข้อความใน hero-section */
+    }
+
+    .search-container input, .search-container button {
+        font-size: 0.85rem; /* ปรับขนาดฟอนต์ของช่องกรอกข้อมูลและปุ่มค้นหา */
+    }
+
+    .result-item span {
+        font-size: 0.85rem; /* ลดขนาดฟอนต์ของข้อมูลในผลลัพธ์ */
+    }
+}
