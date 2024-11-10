@@ -6,22 +6,33 @@ function search() {
     openModal(); // เปิด pop-up รอสักครู่
     var term = document.getElementById("searchTerm").value.trim(); // แปลงคำค้นหาเป็นตัวพิมพ์เล็ก
 
+    // ดึงข้อมูลจากชีท 1 (ข้อมูลนักเรียน)
     fetch(`https://api.sheety.co/5cb2ec12524c134a0474c157793aaa3b/data/data`, {
-        method: 'GET',
+        method: 'GET', // ระบุว่าเป็นการดึงข้อมูล (GET)
         headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer hkp13198913'
+            'Content-Type': 'application/json', // กำหนดรูปแบบข้อมูลที่ส่งและรับ
+            'Authorization': 'Bearer hkp13198913' // ใช้ Bearer Token ในการยืนยันตัวตน
         }
     })
     .then(response => {
         if (!response.ok) {
             throw new Error('Failed to fetch data from API');
         }
-        return response.json();
+        return response.json(); // แปลงข้อมูลที่ได้มาเป็น JSON
     })
-    .then(data => {
-        displayResults(data, term); // แสดงผลลัพธ์ในตาราง
-        closeModal(); // ปิด pop-up เมื่อการค้นหาสำเร็จ
+    .then(studentData => {
+        // ดึงข้อมูลจากชีท 2 (ข้อมูลเหตุผลการหักคะแนน)
+        return fetch(`https://api.sheety.co/5cb2ec12524c134a0474c157793aaa3b/data/ชีต8`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer hkp13198913'
+            }
+        }).then(response => response.json())
+        .then(penaltyData => {
+            displayResults(studentData, penaltyData, term); // ส่งข้อมูลทั้งสองมารวมกัน
+            closeModal(); // ปิด pop-up เมื่อการค้นหาสำเร็จ
+        });
     })
     .catch(error => {
         console.error('Error:', error);
@@ -29,53 +40,85 @@ function search() {
     });
 }
 
-function displayResults(data, term) {
+function displayResults(studentData, penaltyData, term) {
     var infoTable = document.getElementById("infoTable");
     infoTable.innerHTML = ""; // ลบข้อมูลเดิมในตาราง
 
-    var results = data.data || []; // ตรวจสอบว่า data.data มีค่าหรือไม่
-    if (results.length === 0) {
-        infoTable.innerHTML = "<p>ไม่พบข้อมูลในฐานข้อมูล</p>";
-        return;
-    }
+    // ค้นหานักเรียนตามเลขประจำตัวนักเรียน
+    var student = studentData.data.find(item => item["เลขประจำตัวนักเรียน"] == term);
+    var penalties = penaltyData.ชีต8.filter(item => item["เลขประจำตัวนักเรียน"] == term);
 
-    var found = results.find(item => item["เลขประจำตัวนักเรียน"] == term);
-
-    if (found) {
+    if (student) {
         var infoHtml = `
             <div class="result-item">
                 <span>ชั้น</span>
-                <span>${found["ชั้น"] || ''}</span>
+                <span>${student["ชั้น"] || ''}</span>
             </div>
             <div class="result-item">
                 <span>เลขที่</span>
-                <span>${found["เลขที่"] || ''}</span>
+                <span>${student["เลขที่"] || ''}</span>
             </div>
             <div class="result-item">
                 <span>เลขประจำตัวนักเรียน</span>
-                <span>${found["เลขประจำตัวนักเรียน"] || ''}</span>
+                <span>${student["เลขประจำตัวนักเรียน"] || ''}</span>
             </div>
             <div class="result-item">
                 <span>ชื่อ</span>
-                <span>${found["ชื่อ"] || ''}</span>
+                <span>${student["ชื่อ"] || ''}</span>
             </div>
             <div class="result-item">
                 <span>นามสกุล</span>
-                <span>${found["นามสกุล"] || ''}</span>
+                <span>${student["นามสกุล"] || ''}</span>
             </div>
             <div class="result-item">
                 <span>แต้มตลอดทั้งปีการศึกษา</span>
-                <span>${found["แต้มตลอดทั้งปีการศึกษา"] || ''}</span>
+                <span>${student["แต้มตลอดทั้งปีการศึกษา"] || ''}</span>
+            </div>
+            <div class="result-item">
+                <button id="showMoreBtn" class="btn btn-link" onclick="toggleDetails()">แสดงเพิ่มเติม</button>
+                <div id="extraDetails" style="display:none;">
+                    <div class="result-item">
+                        <span style="font-size: 14px;">เหตุผลการหักคะแนน (3 รายการล่าสุด)</span>
+                        <ul>
+                            ${getLatestReasons(penalties[0]?.["เหตุผลการหักคะแนน"], penalties[0]?.["คะแนนที่หัก"]).map((reason, index) => 
+                                `<li>${reason[0]} - หัก ${reason[1]} คะแนน</li>`
+                            ).join('')}
+                        </ul>
+                    </div>
+                </div>
             </div>
         `;
         infoTable.innerHTML = infoHtml;
-
-        // แสดง Privacy Policy Popup
-        document.getElementById("studentName").textContent = found["ชื่อ"] || '';
-        document.getElementById("studentClass").textContent = found["ชั้น"] || '';
-        document.getElementById("studentId").textContent = found["เลขประจำตัวนักเรียน"] || '';
     } else {
         infoTable.innerHTML = "<p>ไม่พบข้อมูลที่ค้นหา</p>";
+    }
+}
+
+function getLatestReasons(reasons, points) {
+    if (!reasons || !points) return [];
+    
+    // แปลงข้อมูลที่เก็บในรูปแบบ string เป็น array
+    const reasonArray = JSON.parse(reasons); // แปลงเหตุผลจาก string เป็น array
+    const pointsArray = JSON.parse(points); // แปลงคะแนนจาก string เป็น array
+    
+    // สร้างอาเรย์ของเหตุผลและคะแนนที่หัก
+    const reasonList = reasonArray.map((reason, index) => [reason, pointsArray[index]]);
+    
+    // คืนค่าจาก 3 รายการล่าสุด
+    return reasonList.slice(-3); // เลือกเอา 3 รายการล่าสุด
+}
+
+function toggleDetails() {
+    var extraDetails = document.getElementById("extraDetails");
+    var showMoreBtn = document.getElementById("showMoreBtn");
+
+    // Toggle the visibility of the extra details
+    if (extraDetails.style.display === "none") {
+        extraDetails.style.display = "block"; // Show details
+        showMoreBtn.textContent = "ซ่อนข้อมูล"; // Change button text to "Hide"
+    } else {
+        extraDetails.style.display = "none"; // Hide details
+        showMoreBtn.textContent = "แสดงเพิ่มเติม"; // Change button text back to "Show More"
     }
 }
 
