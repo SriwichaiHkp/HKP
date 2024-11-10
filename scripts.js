@@ -6,7 +6,7 @@ function search() {
     openModal(); // เปิด pop-up รอสักครู่
     var term = document.getElementById("searchTerm").value.trim(); // แปลงคำค้นหาเป็นตัวพิมพ์เล็ก
 
-    fetch(`https://api.sheety.co/5cb2ec12524c134a0474c157793aaa3b/แต้ม/data`, {
+    fetch(`https://api.sheety.co/5cb2ec12524c134a0474c157793aaa3b/data/data`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -65,7 +65,7 @@ function displayResults(data, term) {
             </div>
             <div class="result-item">
                 <span>แต้มตลอดทั้งปีการศึกษา</span>
-                <span>${found["แต้มทั้งหมด"] || ''}</span>
+                <span>${found["แต้มตลอดทั้งปีการศึกษา"] || ''}</span>
             </div>
         `;
         infoTable.innerHTML = infoHtml;

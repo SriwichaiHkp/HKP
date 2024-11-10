@@ -37,6 +37,9 @@
     margin-bottom: 0; /* เอาช่องว่างออกจากด้านล่าง */
     position: relative; /* ใช้ relative positioning เพื่อให้ search-container ใช้ absolute positioning ได้ */
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* จัดให้อยู่กลาง */
 }
 
 .hero-section h1 {
@@ -49,6 +52,24 @@
 
 .hero-section p {
     font-size: 1.2rem; /* ขนาดฟอนต์ที่เหมาะสมบนคอมพิวเตอร์ */
+}
+
+/* ช่องค้นหา */
+.search-container {
+    width: 90%;
+    max-width: 500px;
+    margin-top: 30px; /* เพิ่มระยะห่างจาก hero section */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10;
+}
+
+.search-container input, .search-container button {
+    font-size: 1rem;
+    padding: 0.75rem;
+    width: 100%;
+    margin-top: 10px;
 }
 
 /* Footer */
@@ -91,25 +112,6 @@ html, body {
 }
 
 /* ฟอร์มค้นหาบนมือถือ - ย้ายไปอยู่ติดกับ hero-section */
-.search-container {
-    position: absolute; 
-    left: 50%;
-    transform: translateX(-50%); /* จัดกลาง */
-    top: 250px; /* ปรับตำแหน่งให้ติดกับ hero-section */
-    text-align: center;
-    width: 90%; /* กำหนดความกว้าง */
-    max-width: 500px; /* ความกว้างสูงสุด */
-    z-index: 10; /* ทำให้ฟอร์มค้นหาปรากฏด้านบน */
-}
-
-.search-container input, .search-container button {
-    font-size: 1rem; /* ขนาดฟอนต์ที่เหมาะสม */
-    padding: 0.75rem;
-    width: 100%;
-    margin-top: 10px;
-}
-
-/* สไตล์สำหรับการแสดงข้อมูลในแนวตั้ง */
 .result-container {
     display: flex;
     flex-direction: column;
@@ -214,7 +216,7 @@ html, body {
     .search-container {
         width: 90%;
         max-width: 100%;
-        top: 230px; /* ปรับตำแหน่งขึ้นไปใกล้กับ hero-section */
+        margin-top: 20px; /* ลดระยะห่าง */
     }
 
     .result-container {
