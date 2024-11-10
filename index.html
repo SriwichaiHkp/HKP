@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>เว็บไซต์โรงเรียน</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    header {
+      background-color: #0044cc;
+      color: white;
+      padding: 10px;
+      text-align: center;
+    }
+    .content {
+      margin: 20px;
+    }
+    .calendar, .form, .news {
+      margin-bottom: 40px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>เว็บไซต์โรงเรียน</h1>
+  </header>
+
+  <div class="content">
+    <section class="calendar">
+      <h2>ปฏิทินกิจกรรม</h2>
+      <iframe src="https://calendar.google.com/calendar/embed?src=your-calendar-id&ctz=Asia%2FBangkok" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+    </section>
+
+    <section class="form">
+      <h2>ฟอร์มการติดต่อ</h2>
+      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScZ2GDeKfQNKgjgZW4GXY5z9i0vS5Zb1z_H_Rz_KfjUkImrFA/viewform?embedded=true" width="640" height="480"></iframe>
+    </section>
+
+    <section class="news">
+      <h2>ข่าวสารและประกาศ</h2>
+      <ul>
+        <li><a href="#">การเปิดภาคเรียนใหม่ 2567</a></li>
+        <li><a href="#">กิจกรรมวันแม่แห่งชาติ</a></li>
+        <li><a href="#">ประกาศเรื่องการจ่ายเงินค่าเรียน</a></li>
+      </ul>
+    </section>
+  </div>
+</body>
+</html>
