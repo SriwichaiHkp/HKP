@@ -95,7 +95,7 @@ html, body {
     position: absolute; 
     left: 50%;
     transform: translateX(-50%); /* จัดกลาง */
-    top: 220px; /* ปรับตำแหน่งให้ติดกับ hero-section */
+    top: 250px; /* ปรับตำแหน่งให้ติดกับ hero-section */
     text-align: center;
     width: 90%; /* กำหนดความกว้าง */
     max-width: 500px; /* ความกว้างสูงสุด */
@@ -214,7 +214,7 @@ html, body {
     .search-container {
         width: 90%;
         max-width: 100%;
-        top: 220px; /* ปรับตำแหน่งขึ้นไปใกล้กับ hero-section */
+        top: 230px; /* ปรับตำแหน่งขึ้นไปใกล้กับ hero-section */
     }
 
     .result-container {
