@@ -1,51 +1,174 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>เว็บไซต์โรงเรียน</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-    }
-    header {
-      background-color: #0044cc;
-      color: white;
-      padding: 10px;
-      text-align: center;
-    }
-    .content {
-      margin: 20px;
-    }
-    .calendar, .form, .news {
-      margin-bottom: 40px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HKPAffairs</title>
+    <style>
+        /* สไตล์ทั่วไปของ body */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        /* สไตล์สำหรับ Navbar */
+        nav {
+            background-color: #333;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between; /* ทำให้โลโก้อยู่ซ้ายและเมนูอยู่ขวา */
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 20px; /* เว้นระยะระหว่างเมนู */
+        }
+
+        nav ul li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+        }
+
+        nav ul li a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        /* ฟอร์มค้นหาสำหรับการค้นหา */
+        #searchForm {
+            margin: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #searchQuery {
+            padding: 10px;
+            font-size: 16px;
+            width: 300px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #searchForm button {
+            padding: 10px 15px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        #searchForm button:hover {
+            background-color: #555;
+        }
+
+        /* สไตล์สำหรับผลลัพธ์การค้นหา */
+        #searchResults {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        #searchResults p {
+            font-size: 18px;
+            color: #333;
+        }
+
+        /* สไตล์เมื่อไม่พบผลลัพธ์ */
+        #searchResults p.no-results {
+            color: red;
+            font-weight: bold;
+        }
+
+        /* สไตล์เมื่อขนาดหน้าจอเล็กลง (มือถือ) */
+        @media screen and (max-width: 600px) {
+            nav ul li {
+                float: none;
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>เว็บไซต์โรงเรียน</h1>
-  </header>
 
-  <div class="content">
-    <section class="calendar">
-      <h2>ปฏิทินกิจกรรม</h2>
-      <iframe src="https://calendar.google.com/calendar/embed?src=your-calendar-id&ctz=Asia%2FBangkok" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
-    </section>
+    <!-- Navbar -->
+    <nav>
+        <div class="logo">
+            <a href="imgs/1.png">HKPAffairs</a>
+        </div>
+        <ul>
+            <li><a href="#">หน้าแรก</a></li>
+            <li><a href="https://sites.google.com/hunkhapit.ac.th/hkp-student-affairs/"></a>กลุ่มบริหารกิจการนักเรียน</li>
+            <li><a href="privacy_policy.html">นโยบายคุ้มครองข้อมูลส่วนบุคคล</a></li>
+        </ul>
+    </nav>
 
-    <section class="form">
-      <h2>ฟอร์มการติดต่อ</h2>
-      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScZ2GDeKfQNKgjgZW4GXY5z9i0vS5Zb1z_H_Rz_KfjUkImrFA/viewform?embedded=true" width="640" height="480"></iframe>
-    </section>
+    <!-- ฟอร์มค้นหา -->
+    <form id="searchForm">
+        <input type="text" id="searchQuery" placeholder="เลขประจำตัวนักเรียน" required>
+        <button type="submit">ค้นหา</button>
+    </form>
 
-    <section class="news">
-      <h2>ข่าวสารและประกาศ</h2>
-      <ul>
-        <li><a href="#">การเปิดภาคเรียนใหม่ 2567</a></li>
-        <li><a href="#">กิจกรรมวันแม่แห่งชาติ</a></li>
-        <li><a href="#">ประกาศเรื่องการจ่ายเงินค่าเรียน</a></li>
-      </ul>
-    </section>
-  </div>
+    <!-- ผลลัพธ์การค้นหา -->
+    <div id="searchResults"></div>
+
+    <script>
+        document.getElementById('searchForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // ป้องกันการรีเฟรชหน้าเว็บ
+
+            // ดึงค่าคำค้นหาจากฟอร์ม
+            const query = document.getElementById('searchQuery').value.toLowerCase();
+            
+            // ข้อมูลตัวอย่างที่จะค้นหา
+            const data = [
+                "กิจกรรมสัมมนา",
+                "ข่าวสารการประชุม",
+                "การประกาศต่างๆ",
+                "ข้อกำหนดและเงื่อนไข",
+                "คำแนะนำสำหรับสมาชิก"
+            ];
+
+            // ฟิลเตอร์ข้อมูลตามคำค้นหา
+            const results = data.filter(item => item.toLowerCase().includes(query));
+
+            // แสดงผลลัพธ์การค้นหา
+            const resultsContainer = document.getElementById('searchResults');
+            resultsContainer.innerHTML = ''; // ล้างผลลัพธ์เดิม
+
+            if (results.length > 0) {
+                results.forEach(result => {
+                    const resultElement = document.createElement('p');
+                    resultElement.textContent = result;
+                    resultsContainer.appendChild(resultElement);
+                });
+            } else {
+                const noResultsElement = document.createElement('p');
+                noResultsElement.textContent = 'ไม่พบผลลัพธ์ที่ตรงกัน';
+                noResultsElement.classList.add('no-results');
+                resultsContainer.appendChild(noResultsElement);
+            }
+        });
+    </script>
+
 </body>
 </html>
